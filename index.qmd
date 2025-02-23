@@ -28,14 +28,14 @@ comments: false
 "jobTitle":"Student IT Spec",
 "height":"75 inches",
 "gender":"male",
-"description":"Jaypal Patel is a student at University of Illinois at Urbana-Champaign, studying Information Science + Data Science with a minor in Economics. He works as a Helpdesk Spec for Engineering IT at University of Illinois at Urbana-Champaign.","url":"https://chrisvoncsefalvay.com",
-"image":"https://chrisvoncsefalvay.com/img/IMG_5986.jpeg",
-"address":{"@type":"PostalAddress","addressLocality":"Denver","addressRegion":"CO","postalCode":"80204","addressCountry":"United States"},
-"alumniOf":[{"@type":"CollegeOrUniversity","name":"University of Oxford","sameAs":"https://en.wikipedia.org/wiki/University_of_Oxford"},{"@type":"CollegeOrUniversity","name":"Cardiff University","sameAs":"https://en.wikipedia.org/wiki/Cardiff_University"}],
-"worksFor":[{"@type":"Organization","name":"HCLTech"}],
-"birthDate":"1986-07-15",
-"birthPlace":"Budapest, Hungary",
-"memberOf":[{"@type":"Organization","name":"Royal Society for Public Health"},{"@type":"Organization","name":"TOPRA"},{"@type":"Organization","name":"IEEE"}],"nationality":[{"@type":"Country","name":"United Kingdom"},{"@type":"Country","name":"Hungary"}]}
+"description":"Jaypal Patel is a student at University of Illinois at Urbana-Champaign, studying Information Science + Data Science with a minor in Economics. He works as a Helpdesk Spec for Engineering IT at University of Illinois at Urbana-Champaign.","url":"https://jaypalpatel.com",
+"image":"https://jaypalpatel.com/img/portfolio_img1.JPG",
+"address":{"@type":"PostalAddress","addressLocality":"Champaign","addressRegion":"IL","postalCode":"61820","addressCountry":"United States"},
+"studentOf":{"@type":"CollegeOrUniversity","name":"University of Illinois Urbana-Champaign","sameAs":"https://en.wikipedia.org/wiki/University_of_Illinois_Urbana-Champaign"},
+"worksFor":[{"@type":"Organization","name":"University of Illinois at Urbana-Champaign"}],
+"birthDate":"2004-06-06",
+"birthPlace":"Gujarat, India",
+"nationality":{"@type":"Country","name":"India"}}
 </script>
 
 ## Bio
