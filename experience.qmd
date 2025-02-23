@@ -1,0 +1,36 @@
+---
+title: "Experiences"
+---
+
+### **Engineering IT Shared Services**
+*The Grainger College of Engineering,*<br>
+*University of Illinois Urbana-Champaign*<br>
+
+* ##### **L2 Consultant:**
+*January, 2024 - Present*<br>
+
+    - *<u>Active Directory Management and Security:</u>* Oversaw the management of Active Directory (AD), ensuring the implementation of proper security protocols and access control measures. Successfully integrated CrowdStrike Falcon into the existing network, bolstering endpoint protection.
+    - *<u>Leadership in IT Projects:</u>* Led multiple projects, initiatives, and working groups, driving the successful implementation of complex IT architectures and process improvements across the organization.
+    - *<u>Documentation and Compliance:</u>* Authored, maintained, and reviewed detailed documentation related to server services, ensuring clarity, accuracy, and compliance with internal standards and best practices.
+    - *<u>Engagement with Instructional Technology:</u>* Actively contributed to a variety of campus instructional technology initiatives, including platforms such as Coursera, Compass 2G, Kaltura, CITES, and CITL, to facilitate the integration and enhancement of educational technologies.
+
+* ##### **L1 Consultant:**
+*January, 2023 - January, 2024*<br>
+
+    - *<u>Cloud Network Implementation:</u>* Contributed to the deployment of a cloud-based network infrastructure, enhancing system scalability and flexibility to meet evolving business needs.
+    - *<u>Technology Research and Recommendations:</u>* Conducted research on emerging technologies and provided recommendations that significantly improved system performance and enhanced the overall user experience.
+    - *<u>IT Support System Development:</u>* Assisted in developing a user-friendly IT support system, resulting in a notable reduction in the average time taken to resolve tickets and incidents.
+    - *<u>Hardware, Software, and Network Configuration:</u>* Installed and configured new hardware, software, and network components, leading to improved system performance, reliability, and operational efficiency.
+    - *<u>Security Enhancement:</u>* Implemented a robust user access control system, strengthening system security by preventing unauthorized access and ensuring compliance with security protocols.
+    - *<u>Virtual Machine Management:</u>* Installed, configured, and managed virtual machines, supporting efficient resource utilization and further optimizing system performance.
+
+### **Illinois Computer Science**
+*Siebel School of Computing and Data Science,*<br>
+*University of Illinois Urbana-Champaign*<br>
+
+* ##### **CS 124: Course Assistant**
+*January, 2023 - January, 2024*<br>
+
+    - *<u>Collaboration with Course Team:</u>* Collaborated with colleagues to ensure course objectives were achieved, fostering an environment that supported student success and academic growth.
+    - *<u>Lab Support and Student Assistance:</u>* Assisted the course instructor in conducting lab sessions, grading assignments, and providing individualized support to students, helping them understand programming concepts and assignments.
+    - *<u>Java Programming Assistance:</u>* Facilitated doubt-solving sessions for Java programming, leveraging a deep understanding of object-oriented principles, data structures, algorithms, design patterns, and software development concepts to assist students.

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jaypal Patel">
+<meta name="dcterms.date" content="2024-11-23">
+
+<title>Exploring the Deep Dive into Model Interpretability with SHAP and LIME: A Technical Walkthrough – Jaypal Patel</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jaypal Patel</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../experience.html"> 
+<span class="menu-text">Experience</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Notebook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../captures.html"> 
+<span class="menu-text">Captures</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exploring-the-deep-dive-into-model-interpretability-with-shap-and-lime-a-technical-walkthrough" id="toc-exploring-the-deep-dive-into-model-interpretability-with-shap-and-lime-a-technical-walkthrough" class="nav-link active" data-scroll-target="#exploring-the-deep-dive-into-model-interpretability-with-shap-and-lime-a-technical-walkthrough">Exploring the Deep Dive into Model Interpretability with SHAP and LIME: A Technical Walkthrough</a>
+  <ul class="collapse">
+  <li><a href="#why-model-interpretability-matters" id="toc-why-model-interpretability-matters" class="nav-link" data-scroll-target="#why-model-interpretability-matters">Why Model Interpretability Matters</a></li>
+  <li><a href="#shap-a-game-changer-in-explainability" id="toc-shap-a-game-changer-in-explainability" class="nav-link" data-scroll-target="#shap-a-game-changer-in-explainability">SHAP: A Game-Changer in Explainability</a></li>
+  <li><a href="#lime-explaining-models-locally" id="toc-lime-explaining-models-locally" class="nav-link" data-scroll-target="#lime-explaining-models-locally">LIME: Explaining Models Locally</a></li>
+  <li><a href="#comparing-shap-and-lime" id="toc-comparing-shap-and-lime" class="nav-link" data-scroll-target="#comparing-shap-and-lime">Comparing SHAP and LIME</a></li>
+  <li><a href="#conclusion-which-tool-should-you-use" id="toc-conclusion-which-tool-should-you-use" class="nav-link" data-scroll-target="#conclusion-which-tool-should-you-use">Conclusion: Which Tool Should You Use?</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exploring the Deep Dive into Model Interpretability with SHAP and LIME: A Technical Walkthrough</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">SHAP</div>
+    <div class="quarto-category">LIME</div>
+    <div class="quarto-category">Model Interpretability Techniques</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jaypal Patel </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">23 November 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In the world of machine learning, we often find ourselves building powerful models that predict with high accuracy, but as the complexity of these models grows, so does the need for interpretability. In this post, we’ll dive into two popular techniques—SHAP and LIME—that help shed light on how our models make decisions, all while exploring their unique strengths in a fun and insightful way.</p>
+<p><img src="shap_lime.jpeg" class="img-fluid"></p>
+<section id="exploring-the-deep-dive-into-model-interpretability-with-shap-and-lime-a-technical-walkthrough" class="level1">
+<h1>Exploring the Deep Dive into Model Interpretability with SHAP and LIME: A Technical Walkthrough</h1>
+<p>As data scientists, we often find ourselves on a relentless pursuit of accuracy. Whether we are working on predictive models for business, healthcare, or autonomous vehicles, the end goal is often to craft a model that performs well on unseen data. However, as these models become more complex, particularly with the rise of ensemble methods like Random Forests and gradient boosting, or deep learning models such as Neural Networks, we encounter an increasing demand for <strong>interpretability</strong>. Understanding why and how our models make predictions is crucial, not just for model improvement, but for building trust with stakeholders.</p>
+<p>In this post, we’ll take a deep dive into two powerful techniques for model interpretability: <strong>SHAP (SHapley Additive exPlanations)</strong> and <strong>LIME (Local Interpretable Model-agnostic Explanations)</strong>. These methods help us break down the “black-box” nature of models, offering transparency into how input features influence predictions.</p>
+<hr>
+<section id="why-model-interpretability-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-model-interpretability-matters">Why Model Interpretability Matters</h3>
+<p>Before we jump into the techniques themselves, it’s important to understand why interpretability is a critical aspect of data science:</p>
+<ol type="1">
+<li><strong>Trust and Accountability</strong>: In regulated industries (like finance or healthcare), explaining the reasoning behind a model’s prediction is essential for legal and ethical reasons.</li>
+<li><strong>Model Diagnostics</strong>: Interpretation can highlight issues like feature leakage, biases, or areas where the model can be improved.</li>
+<li><strong>Decision-Making</strong>: In business settings, stakeholders need confidence that a model is making reasonable decisions based on actionable insights, not just statistical noise.</li>
+</ol>
+</section>
+<section id="shap-a-game-changer-in-explainability" class="level3">
+<h3 class="anchored" data-anchor-id="shap-a-game-changer-in-explainability">SHAP: A Game-Changer in Explainability</h3>
+<p>SHAP is rooted in <strong>Shapley values</strong>, a concept borrowed from cooperative game theory. These values provide a way to fairly attribute the contribution of each feature to the model’s predictions. The brilliance of SHAP is in its <strong>consistency</strong> and <strong>local accuracy</strong>—it ensures that the sum of the individual feature contributions equals the model’s prediction, and that features with higher impact are assigned higher values.</p>
+<section id="shap-value-decomposition" class="level4">
+<h4 class="anchored" data-anchor-id="shap-value-decomposition">SHAP Value Decomposition</h4>
+<p>Let’s assume a model makes a prediction for a given instance. SHAP assigns a value to each feature based on its <strong>marginal contribution</strong> to the prediction. This is done by comparing how the model’s prediction changes when we include or exclude a feature in the model.</p>
+<p>The SHAP value for a feature <code>j</code> for a specific instance <code>i</code> is defined as:</p>
+<p><span class="math display">\[
+\phi_j(f) = \sum_{S \subseteq N \setminus \{j\}} \frac{|S|!(|N|-|S|-1)!}{|N|!} \left[f(S \cup \{j\}) - f(S)\right]
+\]</span></p>
+<p>Where: - <code>f(S)</code> is the model’s prediction when the set of features <code>S</code> is used. - <code>|S|</code> and <code>|N|</code> are the sizes of the subsets of features and the total set of features, respectively.</p>
+<p>What’s fascinating is that this decomposition ensures fairness: each feature is assigned a value based on its actual contribution to the prediction, irrespective of other features. This is particularly useful in ensemble models, where interactions between features are complex and hard to visualize.</p>
+</section>
+<section id="visualizing-shap-values" class="level4">
+<h4 class="anchored" data-anchor-id="visualizing-shap-values">Visualizing SHAP Values</h4>
+<p>One of the key advantages of SHAP is that it provides a variety of visualization tools to make the results more digestible:</p>
+<ol type="1">
+<li><p><strong>SHAP Summary Plots</strong>: These plots provide a bird’s-eye view of how each feature impacts model predictions across the entire dataset. The color of each point represents the feature value (e.g., blue for lower values and red for higher values), and the horizontal position shows the SHAP value.</p></li>
+<li><p><strong>SHAP Force Plots</strong>: Force plots provide an intuitive, visual representation of how a single feature contributes to a prediction. They stack feature contributions on top of each other, showing how individual features push the model’s prediction up or down.</p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="lime-explaining-models-locally" class="level3">
+<h3 class="anchored" data-anchor-id="lime-explaining-models-locally">LIME: Explaining Models Locally</h3>
+<p>While SHAP provides a global explanation of model behavior, <strong>LIME</strong> takes a more local approach. LIME (Local Interpretable Model-agnostic Explanations) explains individual predictions by approximating the complex model with a simpler, interpretable surrogate model locally around the prediction of interest.</p>
+<p>The key idea behind LIME is to perturb the input data and observe how the model’s prediction changes. It then fits an interpretable surrogate model (such as a linear regression or decision tree) to these perturbed data points.</p>
+<section id="the-process" class="level4">
+<h4 class="anchored" data-anchor-id="the-process">The Process</h4>
+<ol type="1">
+<li><p><strong>Perturbation</strong>: LIME generates new data points by perturbing the original data instance. For instance, in the case of tabular data, it might randomly shuffle values in the dataset or create synthetic samples around the instance being explained.</p></li>
+<li><p><strong>Model Prediction</strong>: The model’s predictions are gathered for these perturbed samples.</p></li>
+<li><p><strong>Surrogate Model</strong>: LIME fits a simple interpretable model (such as a linear model or a decision tree) to the new dataset consisting of the perturbed samples and their corresponding predictions.</p></li>
+<li><p><strong>Explanation</strong>: The surrogate model is then used to explain how features contributed to the final prediction.</p></li>
+</ol>
+<p>Since LIME works locally, it’s a great tool when the user wants to understand how a model makes predictions for specific instances, even if the model itself is too complex to explain directly.</p>
+<hr>
+</section>
+</section>
+<section id="comparing-shap-and-lime" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-shap-and-lime">Comparing SHAP and LIME</h3>
+<p>While both SHAP and LIME are model-agnostic and focus on explaining black-box models, they differ in their approaches:</p>
+<ul>
+<li><strong>Interpretability Scope</strong>: SHAP provides a <strong>global</strong> explanation by offering insights into how each feature affects the model’s overall behavior across the dataset, whereas LIME focuses on <strong>local</strong> explanations for individual predictions.</li>
+<li><strong>Accuracy</strong>: SHAP is more consistent and mathematically grounded, as it guarantees that the sum of SHAP values equals the prediction. LIME, on the other hand, is an approximation technique that relies on fitting a surrogate model.</li>
+<li><strong>Computational Complexity</strong>: SHAP can be computationally expensive for large datasets, particularly in tree-based models where it has to compute values over all possible subsets of features. LIME is generally more scalable, though it can still be slow for high-dimensional data due to the need to generate many perturbed samples.</li>
+</ul>
+<hr>
+</section>
+<section id="conclusion-which-tool-should-you-use" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-which-tool-should-you-use">Conclusion: Which Tool Should You Use?</h3>
+<p>The choice between SHAP and LIME depends on your goals and the specific context of your problem:</p>
+<ul>
+<li>Use <strong>SHAP</strong> when you need <strong>global interpretability</strong> and fairness in feature attribution. It’s perfect for understanding complex models at scale and diagnosing model behavior.</li>
+<li>Use <strong>LIME</strong> when you need to explain <strong>individual predictions</strong> and are working with a model where you want a simpler, local explanation that is more intuitive for stakeholders.</li>
+</ul>
+<p>Ultimately, the landscape of model interpretability is growing, and tools like SHAP and LIME represent the cutting edge in making machine learning both powerful and understandable. As the demand for explainable AI increases, these tools will likely become part of every data scientist’s toolkit.</p>
+<hr>
+<p><strong>Further Reading and Resources</strong></p>
+<ul>
+<li><a href="https://github.com/slundberg/shap">SHAP GitHub Repository</a></li>
+<li><a href="https://github.com/marcotcr/lime">LIME GitHub Repository</a></li>
+<li>“Interpretable Machine Learning” by Christoph Molnar (an excellent book for a deeper dive into model explainability).</li>
+</ul>
+<p>Happy coding, and may your models be both accurate <em>and</em> explainable!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/0f44f31c-ffef-4e16-8df0-9fde67057a68\.netlify\.app\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

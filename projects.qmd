@@ -1,0 +1,23 @@
+---
+title: Research & Projects
+---
+## Research
+
+- **Engineered Autonomous Electrosurgical Apparatus**<br>
+*The Grainger College of Engineering (ECE)*<br>
+August, 2023 - March, 2024<br>
+
+  - ***Summary:***<br>
+    - *<u>Data Collection and Analysis:</u>* Collected, cleaned and analyzed extensive datasets using Hierarchical Data Format files (HDF5). Performed in-depth exploratory data analysis to extract meaningful insights and drive decision-making. Employed live visual and infrared image feeds to train models and automate the electrosurgical process.
+
+    - *<u>Model development:</u>* Created mode-specific, cyber-oriented bio-tissue response models by accurately characterizing heat transfer mechanisms for different operational modes (cut, coagulation). Enhanced model predictions through iterative refinement based on laboratory measurements.
+
+    - *<u>Enhancement of model accuracy:</u>* Improved model precision by integrating real-time AI-driven adjustments with foundational heat transfer models. Conducted controlled in vivo porcine trials to collect data across multiple tissue types, including subcutaneous, muscle, liver, lung, and brain, to enhance model robustness across diverse biological scenarios.
+
+    - *<u>Performance evaluation:</u>* Continuously assessed the operational efficiency and accuracy of the autonomous electrosurgical system through comprehensive data collection and performance testing on various live tissue types, refining the equipment for improved clinical applicability.
+
+    - *<u>Python Libraries/Technologies Utilized:</u>* Pandas, NumPy, Matplotlib, OpenCV, Scikit-learn, Seaborn,PyTorch, Tensorflow, Keras.
+
+## Projects
+
+Coming Soon!!!

@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Jaypal Patel"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects
+      - href: experience.qmd
+        text: Experience
+      - href: blog.qmd
+        text: Notebook
+      - href: captures.qmd
+        text: Captures
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+

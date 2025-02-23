@@ -1,0 +1,11 @@
+.gallery img {
+    width: 100%;        /* Make images take full width of their column */
+    height: 250px;      /* Set a fixed height for uniformity */
+    object-fit: cover;  /* Crop images to fit without stretching */
+    border-radius: 8px; /* Optional: Rounded corners for a sleek look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Soft shadow for depth */
+  }
+  
+  .gallery {
+    gap: 16px;          /* Space between images */
+  }

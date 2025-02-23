@@ -1,0 +1,63 @@
+---
+title: "Captures"
+format: html
+lightbox: true
+---
+
+# Behind Lens
+
+
+::: {.columns style="display: flex; gap: 40px;"}
+::: {.column width="40%"}
+![Sunset](img/captures_profile.jpeg)
+&nbsp;  
+_Capturing the golden hour in the mountains._
+:::
+::: {.column width="60%"}
+Photography, for me, is all about capturing the moments that often go unnoticed—the soft glow of a sunset, the quiet charm of a winding street, or the stories etched in everyday life. My camera is my way of exploring the world, one frame at a time. Each photo in this collection reflects not just places I’ve been, but the feelings, details, and perspectives that made those moments memorable. I believe the best shots aren’t always planned—they’re discovered.
+Welcome to my photography portfolio. Here you'll find a collection of my most memorable moments, captured through the lens of my camera. Each image tells a story, whether it's the beauty of nature, the intricacies of everyday life, or the energy of a special event.
+:::
+:::
+
+
+
+## 🌸 Blossoms of the Nilgiris: A Photographic Journey through Ooty & Coonoor 🌿
+
+
+This collection captures the vibrant beauty of the Nilgiri Hills, with a focus on the delicate charm of blooming flowers found across Ooty and Coonoor. A region famous for its tea plantations also boasts even more stunning natural beauty. Each photograph highlights the rich floral diversity of the region—from vivid wildflowers lining misty trails to intricate blossoms thriving in the cool mountain air.
+
+Amidst these floral portraits, you'll also find glimpses of the serene landscapes that cradle these blooms. The rolling hills and tranquil vistas provide a peaceful backdrop, reminding us of the harmony between the towering peaks and the small wonders flourishing beneath them.
+
+This collection is a celebration of the subtle details that often go unnoticed—the texture of petals, the play of light on leaves, and the quiet beauty that defines the Nilgiris. Each frame invites you to slow down and appreciate the delicate stories nature tells, one bloom at a time.
+
+🌼 _A journey through the hills, where every flower holds a story and every landscape whispers calm._🌿
+
+::: {layout-ncol=2 .gallery}
+![](img/ooty/DSC_0131.JPG){group="ooty"} 
+
+![](img/ooty/DSC_0137.JPG){group="ooty"}
+
+![](img/ooty/DSC_0139.JPG){group="ooty"}
+
+![](img/ooty/DSC_0140.JPG){group="ooty"}
+
+![](img/ooty/DSC_0147.JPG){group="ooty"}
+
+![](img/ooty/DSC_0161.JPG){group="ooty"}
+
+![](img/ooty/DSC_0162.JPG){group="ooty"}
+
+![](img/ooty/DSC_0177.JPG){group="ooty"}
+
+![](img/ooty/IMG_3613.jpg){group="ooty"}
+
+![](img/ooty/IMG_3497.jpeg){group="ooty"}
+
+![](img/ooty/DSC_0104.jpeg){group="ooty"}
+
+![](img/ooty/IMG_3617.JPG){group="ooty"}
+:::
+
+::: {layout-ncol=1 .gallery}
+![](img/ooty/DSC_0101.jpeg){group="ooty"}
+:::

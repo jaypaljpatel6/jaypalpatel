@@ -1,0 +1,67 @@
+---
+title: "Jaypal Patel"
+about:
+    template: trestles
+    links:
+        - icon: linkedin
+          text: LinkedIn
+          url: https://www.linkedin.com/in/jaypaljpatel/
+        - icon: twitter"
+          text: Twitter
+          url: https://x.com/jaypalp6604/
+        - icon: github
+          text: Github
+          url: https://github.com/jaypaljpatel6/
+        - icon: instagram
+          text: Instagram
+          url: https://www.instagram.com/_wired_jp/
+        - text: "{{< fa envelope >}} Email"
+          url: mailto:jaypalp2@illinois.edu
+image: img/portfolio_img1.JPG
+comments: false
+---
+
+<script type='application/ld+json'>
+{"@context":"http://www.schema.org",
+"@type":"person",
+"name":"Jaypal Patel",
+"jobTitle":"Student IT Spec",
+"height":"75 inches",
+"gender":"male",
+"description":"Jaypal Patel is a student at University of Illinois at Urbana-Champaign, studying Information Science + Data Science with a minor in Economics. He works as a Helpdesk Spec for Engineering IT at University of Illinois at Urbana-Champaign.","url":"https://chrisvoncsefalvay.com",
+"image":"https://chrisvoncsefalvay.com/img/IMG_5986.jpeg",
+"address":{"@type":"PostalAddress","addressLocality":"Denver","addressRegion":"CO","postalCode":"80204","addressCountry":"United States"},
+"alumniOf":[{"@type":"CollegeOrUniversity","name":"University of Oxford","sameAs":"https://en.wikipedia.org/wiki/University_of_Oxford"},{"@type":"CollegeOrUniversity","name":"Cardiff University","sameAs":"https://en.wikipedia.org/wiki/Cardiff_University"}],
+"worksFor":[{"@type":"Organization","name":"HCLTech"}],
+"birthDate":"1986-07-15",
+"birthPlace":"Budapest, Hungary",
+"memberOf":[{"@type":"Organization","name":"Royal Society for Public Health"},{"@type":"Organization","name":"TOPRA"},{"@type":"Organization","name":"IEEE"}],"nationality":[{"@type":"Country","name":"United Kingdom"},{"@type":"Country","name":"Hungary"}]}
+</script>
+
+## Bio
+
+Hey! I'm Jaypal, a passionate data scientist with a knack for turning complex data into actionable insights. With a strong foundation in statistics, machine learning, and data visualization, I thrive on solving challenging problems and uncovering hidden patterns. My expertise lies in leveraging data to drive decision-making, optimize processes, and predict future trends. I have a keen eye for detail and a relentless curiosity that fuels my continuous learning and innovation in the ever-evolving field of data science. Whether it's building predictive models, cleaning and organizing data, or communicating findings through compelling visualizations, I'm dedicated to making data work smarter.<br>
+
+Outside the realm of data, I have a passion for exploring the world, both through the lens of a camera and the thrill of travel. My love for photography allows me to capture and cherish the beauty of my adventures. When I'm not traveling or snapping photos, you can often find me on the golf course, enjoying the challenge and serenity of the game. I also enjoy reading, diving into new ideas and expanding my perspective. These diverse interests keep me engaged and inspired, making each day an exciting journey.
+
+## Education
+**Bachelor of Science, Information Science + Data Science**
+[*School of Information Sciences*](https://ischool.illinois.edu)<br>
+*University of Illinois Urbana-Champaign*<br>
+*2022 - 2026*
+
+**Econometrics Minor**<br>
+[*Department of Economics*](https://economics.illinois.edu)<br>
+*University of Illinois Urbana-Champaign*<br>
+*2022 - 2026*
+
+## Key research interests
+
+* **Predictive analytics in finance**: risk management, fraud-detection, investment strategies, custome lifetime value (CLV), market sentiment analysis
+* **Retail & E-commerce analytics**: customer segmentation, demand forecasting, churn prediction, designing recommendation algorithms, customer sentiment analysis
+* **Sports analytics**: performance analysis, strategy-optimization, fan engagement
+* **Environmental science**: climate modeling and prediction, sustainability analysis, pollution dynamics
+
+## Pronunciation guide
+
+Jaypal Patel: **JAY-pahl Puh-TEL**
