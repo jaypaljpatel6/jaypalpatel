@@ -10,4 +10,15 @@ listing:
   type: default
 page-layout: full
 title-block-banner: true
+author:
+  - id: cvc
+    number: 1
+    name:
+      given: Jaypal
+      family: Patel
+      literal: Jaypal Patel
+    email: jaypalp2@illinois.edu
 ---
+_Disclaimer: Views expressed on this page do not represent views of any organizations the author is assosciated with. Only aim of this page is to impart information._
+
+<br>
