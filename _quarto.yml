@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Jaypal Patel"
+  google-analytics: G-ZL7PERS15Q
   navbar:
     left:
       - href: index.qmd
