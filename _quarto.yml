@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Jaypal Patel"
+  site-url: "https://www.jaypalpatel.com"
   google-analytics: G-ZL7PERS15Q
   favicon: favicon.png
   navbar:
@@ -23,6 +24,3 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
-
-
-
